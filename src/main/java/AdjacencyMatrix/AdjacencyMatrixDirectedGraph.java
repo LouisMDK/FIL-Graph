@@ -143,8 +143,8 @@ public class AdjacencyMatrixDirectedGraph {
  	 */
 	public AdjacencyMatrixDirectedGraph computeInverse() {
 		AdjacencyMatrixDirectedGraph amInv = new AdjacencyMatrixDirectedGraph(this.matrix);	
-		for (int i = 0; i < this.order; i++) {
-			for (int j = 0; j < this.order; j++) {
+		for (int i = 0; i < this.getNbNodes(); i++) {
+			for (int j = 0; j < this.getNbNodes(); j++) {
 				amInv.matrix[i][j] = this.matrix[j][i];
 			}
 		}
