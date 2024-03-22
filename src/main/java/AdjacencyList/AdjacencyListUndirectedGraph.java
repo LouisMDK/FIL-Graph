@@ -112,6 +112,7 @@ public class AdjacencyListUndirectedGraph {
     public void removeEdge(UndirectedNode x, UndirectedNode y) {
     	if(isEdge(x,y)){
     		x.getNeighbours().remove(y);
+            y.getNeighbours().remove(x);
     	}
     }
 
