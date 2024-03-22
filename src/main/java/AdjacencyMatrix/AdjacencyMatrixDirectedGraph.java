@@ -117,22 +117,25 @@ public class AdjacencyMatrixDirectedGraph {
 	 * @return true if arc (from,to) exists in the graph
  	 */
 	public boolean isArc(int from, int to) {
-		// A completer
-		return true;
+		return this.matrix[from][to]>0;
 	}
 
 	/**
 	 * removes the arc (from,to) if there exists at least one between these nodes in the graph.
 	 */
 	public void removeArc(int from, int to) {
-		// A completer
+		if (this.matrix[from][to]>0){
+			this.matrix[from][to]--;
+			this.m--;
+		}
 	}
 
 	/**
 	 * Adds the arc (from,to). We allow multiple graph.
 	 */
 	public void addArc(int from, int to) {
-		// A completer
+		this.matrix[from][to]++;
+		this.m++;
 	}
 
 	/**
