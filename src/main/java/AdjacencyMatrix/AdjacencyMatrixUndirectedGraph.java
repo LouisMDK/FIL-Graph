@@ -81,7 +81,7 @@ public class AdjacencyMatrixUndirectedGraph {
 
 	/**
 	 * 
-	 * @param x the vertex selected
+	 * @param v the vertex selected
 	 * @return a list of vertices which are the neighbours of x
 	 */
 	public List<Integer> getNeighbours(int v) {
