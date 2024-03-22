@@ -102,9 +102,8 @@ public class AdjacencyListUndirectedGraph {
     /**
      * @return true if there is an edge between x and y
      */
-    public boolean isEdge(UndirectedNode x, UndirectedNode y) {      	
-        // A completer
-    	return true;
+    public boolean isEdge(UndirectedNode x, UndirectedNode y) {
+        return x.getNeighbours().containsKey(y);
     }
 
     /**
@@ -112,7 +111,7 @@ public class AdjacencyListUndirectedGraph {
      */
     public void removeEdge(UndirectedNode x, UndirectedNode y) {
     	if(isEdge(x,y)){
-    		// A completer
+    		x.getNeighbours().remove(y);
     	}
     }
 
@@ -121,8 +120,11 @@ public class AdjacencyListUndirectedGraph {
      * In non-valued graph, every edge has a cost equal to 0
      */
     public void addEdge(UndirectedNode x, UndirectedNode y) {
-    	if(!isEdge(x,y)){
-    		// A completer
+    	if(!isEdge(x,y)
+                && nodes.contains(x)
+                && nodes.contains(y)){
+    		x.getNeighbours().put(y,0);
+    		y.getNeighbours().put(x,0);
     	}
     }
 
