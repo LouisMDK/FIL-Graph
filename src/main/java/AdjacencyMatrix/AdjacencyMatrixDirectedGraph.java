@@ -179,6 +179,18 @@ public class AdjacencyMatrixDirectedGraph {
 		for (Integer integer : t2) {
 			System.out.print(integer + ", ");
 		}
-		// A completer
+
+		// Is there an arc between 2 and 3 ?
+		System.out.println("\n\nisArc(2, 3) ? " + am.isArc(2, 3));
+
+		// We add three arcs {2,3} :
+		for(int i = 0; i<3;i++)
+			am.addArc(2, 3);
+
+		System.out.println("\n"+am);
+
+		System.out.println("\nAfter removing one arc {2,3} :");
+		am.removeArc(2,3);
+		System.out.println(am);
 	}
 }
