@@ -143,7 +143,11 @@ public class AdjacencyMatrixDirectedGraph {
  	 */
 	public AdjacencyMatrixDirectedGraph computeInverse() {
 		AdjacencyMatrixDirectedGraph amInv = new AdjacencyMatrixDirectedGraph(this.matrix);	
-		// A completer
+		for (int i = 0; i < this.order; i++) {
+			for (int j = 0; j < this.order; j++) {
+				amInv.matrix[i][j] = this.matrix[j][i];
+			}
+		}
 		return amInv;
 	}
 
@@ -192,5 +196,10 @@ public class AdjacencyMatrixDirectedGraph {
 		System.out.println("\nAfter removing one arc {2,3} :");
 		am.removeArc(2,3);
 		System.out.println(am);
+
+		// Inverse graph
+		System.out.println("Inverse graph : ");
+		AdjacencyMatrixDirectedGraph amInv = am.computeInverse();
+		System.out.println(amInv);
 	}
 }
