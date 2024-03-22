@@ -124,7 +124,7 @@ public class AdjacencyMatrixDirectedGraph {
 	 * removes the arc (from,to) if there exists at least one between these nodes in the graph.
 	 */
 	public void removeArc(int from, int to) {
-		if (this.matrix[from][to]>0){
+		if (this.isArc(from, to)){
 			this.matrix[from][to]--;
 			this.m--;
 		}
