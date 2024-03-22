@@ -121,6 +121,7 @@ public class AdjacencyMatrixUndirectedGraph {
      */
 	public void addEdge(int x, int y) {
 		this.matrix[x][y]++;
+		this.matrix[y][x]++;
 		this.m++;
 	}
 
