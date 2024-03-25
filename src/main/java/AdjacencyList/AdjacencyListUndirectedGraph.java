@@ -154,7 +154,13 @@ public class AdjacencyListUndirectedGraph {
      */
     public int[][] toAdjacencyMatrix() {
         int[][] matrix = new int[order][order];
-        // A completer
+
+          for (UndirectedNode n : nodes) {
+                for (UndirectedNode sn : n.getNeighbours().keySet()) {
+                    matrix[n.getLabel()][sn.getLabel()] = 1;
+                }
+          }
+
         return matrix;
     }
 
@@ -180,6 +186,14 @@ public class AdjacencyListUndirectedGraph {
         System.out.println("(2,5) is it in the graph ? " +  al.isEdge(al.getNodes().get(2), al.getNodes().get(5)));
         
         // A completer
+        System.out.println("Add edge (2,5)");
+        al.addEdge(al.getNodes().get(2), al.getNodes().get(5));
+        System.out.println("(2,5) is it in the graph ? " +  al.isEdge(al.getNodes().get(2), al.getNodes().get(5)));
+        System.out.println(al);
+
+        System.out.println("adjacency matrix of the graph");
+        GraphTools.afficherMatrix(al.toAdjacencyMatrix());
     }
+
 
 }
