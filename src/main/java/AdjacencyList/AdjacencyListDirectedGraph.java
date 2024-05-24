@@ -1,11 +1,13 @@
 package AdjacencyList;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-
+import java.util.Set;
 
 
 import GraphAlgorithms.GraphTools;
+import Nodes.AbstractNode;
 import Nodes.DirectedNode;
 
 
@@ -109,15 +111,17 @@ public class AdjacencyListDirectedGraph {
 	 * @return true if arc (from,to) exists in the graph
  	 */
     public boolean isArc(DirectedNode from, DirectedNode to) {
-    	// A completer
-    	return false;
+    	return from.getListSuccs().contains(to);
     }
 
     /**
 	 * Removes the arc (from,to), if it exists
  	 */
     public void removeArc(DirectedNode from, DirectedNode to) {
-    	// A completer
+    	if (isArc(from, to)) {
+            from.getSuccs().remove(to);
+            m--;
+        }
     }
 
     /**
@@ -170,7 +174,40 @@ public class AdjacencyListDirectedGraph {
         // A completer
         return g;
     }
-    
+
+    private void poll() {
+
+    }
+
+    public void BFS() {
+
+    }
+
+    private List<DirectedNode> explorerSommet(DirectedNode node, Set<DirectedNode> a) {
+        List<DirectedNode> result = new ArrayList<>();
+        result.add(node);
+        a.add(node);
+        for (DirectedNode t : node.getListSuccs()) {
+            if (!a.contains(t)) {
+                result.addAll(explorerSommet(t, a));
+            }
+        }
+        return result;
+    }
+
+
+    // DFS algo
+    public List<DirectedNode> explorerGraphe() {
+        HashSet<DirectedNode> atteint = new HashSet<>();
+        List<DirectedNode> result = new ArrayList<>();
+        for (DirectedNode n : nodes) {
+            if (!atteint.contains(n)) {
+                 result.addAll(explorerSommet(n, atteint));
+            }
+        }
+        return result;
+    }
+
     @Override
     public String toString(){
         StringBuilder s = new StringBuilder();
@@ -190,6 +227,8 @@ public class AdjacencyListDirectedGraph {
         GraphTools.afficherMatrix(Matrix);
         AdjacencyListDirectedGraph al = new AdjacencyListDirectedGraph(Matrix);
         System.out.println(al);
-        // A completer
+
+        // Tests DFS
+        System.out.println(al.explorerGraphe());
     }
 }
