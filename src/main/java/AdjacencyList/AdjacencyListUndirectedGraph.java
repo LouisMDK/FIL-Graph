@@ -2,8 +2,10 @@ package AdjacencyList;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import GraphAlgorithms.GraphTools;
+import Nodes.DirectedNode;
 import Nodes.UndirectedNode;
 
 
@@ -35,6 +37,7 @@ public class AdjacencyListUndirectedGraph {
         for (UndirectedNode i : nodes) {
             this.m += i.getNbNeigh();
         }
+        this.m = this.m/2; // we count 2 times each edges (in both way), so we divide by 2
     }
 
     public AdjacencyListUndirectedGraph(int[][] matrix) {
@@ -113,6 +116,7 @@ public class AdjacencyListUndirectedGraph {
     	if(isEdge(x,y)){
     		x.getNeighbours().remove(y);
             y.getNeighbours().remove(x);
+            this.m--;
     	}
     }
 
@@ -124,8 +128,9 @@ public class AdjacencyListUndirectedGraph {
     	if(!isEdge(x,y)
                 && nodes.contains(x)
                 && nodes.contains(y)){
-    		x.getNeighbours().put(y,0);
-    		y.getNeighbours().put(x,0);
+    		x.addNeigh(y,0);
+    		y.addNeigh(x,0);
+            this.m++;
     	}
     }
 
@@ -155,11 +160,11 @@ public class AdjacencyListUndirectedGraph {
     public int[][] toAdjacencyMatrix() {
         int[][] matrix = new int[order][order];
 
-          for (UndirectedNode n : nodes) {
+        for (UndirectedNode n : nodes) {
                 for (UndirectedNode sn : n.getNeighbours().keySet()) {
                     matrix[n.getLabel()][sn.getLabel()] = 1;
-                }
-          }
+            }
+        }
 
         return matrix;
     }
@@ -184,7 +189,13 @@ public class AdjacencyListUndirectedGraph {
         AdjacencyListUndirectedGraph al = new AdjacencyListUndirectedGraph(mat);
         System.out.println(al);
         System.out.println("(2,5) is it in the graph ? " +  al.isEdge(al.getNodes().get(2), al.getNodes().get(5)));
-        
+
+        // fix m for creation with a list of undirected nodes
+        AdjacencyListUndirectedGraph al2 = new AdjacencyListUndirectedGraph(al.getNodes());
+        System.out.println("al2");
+        System.out.println(al.m);
+        System.out.println(al2.m);
+
         // A completer
         System.out.println("Add edge (2,5)");
         al.addEdge(al.getNodes().get(2), al.getNodes().get(5));

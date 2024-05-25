@@ -1,8 +1,10 @@
 package AdjacencyList;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import GraphAlgorithms.GraphTools;
+import Nodes.DirectedNode;
 import Nodes.UndirectedNode;
 
 public class AdjacencyListUndirectedValuedGraph extends AdjacencyListUndirectedGraph{
@@ -39,7 +41,29 @@ public class AdjacencyListUndirectedValuedGraph extends AdjacencyListUndirectedG
      * Adds the edge (from,to) with cost if it is not already present in the graph
      */
     public void addEdge(UndirectedNode x, UndirectedNode y, int cost) {
-    	// A completer
+        if(!isEdge(x,y)
+                && nodes.contains(x)
+                && nodes.contains(y)){
+            x.addNeigh(y,cost);
+            y.addNeigh(x,cost);
+            this.m++;
+        }
+    }
+
+    /**
+     * @return a matrix representation of the graph 
+     */
+    @Override
+    public int[][] toAdjacencyMatrix() {
+        int[][] matrix = new int[order][order];
+
+        for (UndirectedNode n : nodes) {
+            for (Map.Entry<UndirectedNode, Integer> sn : n.getNeighbours().entrySet()) {
+                matrix[n.getLabel()][sn.getKey().getLabel()] = sn.getValue();
+            }
+        }
+
+        return matrix;
     }
     
     @Override
@@ -63,6 +87,21 @@ public class AdjacencyListUndirectedValuedGraph extends AdjacencyListUndirectedG
         GraphTools.afficherMatrix(matrixValued);
         AdjacencyListUndirectedValuedGraph al = new AdjacencyListUndirectedValuedGraph(matrixValued);
         System.out.println(al);
-        // A completer
+
+
+        // Tests add edges
+        System.out.println("=== test edge ===\n");
+
+        UndirectedNode nd1 = al.getNodeOfList(new UndirectedNode(1));
+        UndirectedNode nd2 = al.getNodeOfList(new UndirectedNode(2));
+        System.out.println("is edge 1 -- 2 ?");
+        System.out.println(al.isEdge(nd1, nd2));
+        System.out.println("Add edge 1 -- 2, weight 5");
+        al.addEdge(nd1, nd2, 5);
+        System.out.println("new matrix");
+
+        GraphTools.afficherMatrix(al.toAdjacencyMatrix());
+
+        System.out.println("=== ===");
     }
 }

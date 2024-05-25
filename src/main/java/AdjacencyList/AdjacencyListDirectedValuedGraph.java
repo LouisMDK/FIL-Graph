@@ -1,6 +1,7 @@
 package AdjacencyList;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import GraphAlgorithms.GraphTools;
 import Nodes.DirectedNode;
@@ -39,7 +40,26 @@ public class AdjacencyListDirectedValuedGraph extends AdjacencyListDirectedGraph
      * Adds the arc (from,to) with cost  if it is not already present in the graph
      */
     public void addArc(DirectedNode from, DirectedNode to, int cost) {
-    	// A completer      
+        if (!isArc(from, to) && this.getNodes().contains(from) && this.getNodes().contains(to)) {
+            from.addSucc(to, cost);
+            to.addPred(from, cost);
+            m++;
+        }
+    }
+
+    /**
+     * @return the adjacency matrix representation int[][] of the graph
+     */
+    @Override
+    public int[][] toAdjacencyMatrix() {
+        int[][] matrix = new int[order][order];
+        for (int i = 0; i < order; i++) {
+            for (Map.Entry<DirectedNode, Integer> j : nodes.get(i).getSuccs().entrySet()) {
+                int IndSucc = j.getKey().getLabel();
+                matrix[i][IndSucc] = j.getValue();
+            }
+        }
+        return matrix;
     }
     
     @Override
@@ -64,7 +84,22 @@ public class AdjacencyListDirectedValuedGraph extends AdjacencyListDirectedGraph
         GraphTools.afficherMatrix(matrixValued);
         AdjacencyListDirectedValuedGraph al = new AdjacencyListDirectedValuedGraph(matrixValued);
         System.out.println(al);
-        // A completer
+
+
+        // Tests add arcs
+        System.out.println("=== test arc ===\n");
+
+        DirectedNode nd1 = al.getNodeOfList(new DirectedNode(1));
+        DirectedNode nd2 = al.getNodeOfList(new DirectedNode(2));
+        System.out.println("is arc 1 -> 2 ?");
+        System.out.println(al.isArc(nd1, nd2));
+        System.out.println("Add arc 1 -> 2, weight 5");
+        al.addArc(nd1, nd2, 5);
+        System.out.println("new matrix");
+
+        GraphTools.afficherMatrix(al.toAdjacencyMatrix());
+
+        System.out.println("=== ===");
     }
 	
 }
