@@ -180,14 +180,6 @@ public class AdjacencyListDirectedGraph {
         return g;
     }
 
-    private void poll() {
-
-    }
-
-    public void BFS() {
-
-    }
-
     private List<DirectedNode> explorerSommet(DirectedNode node, Set<DirectedNode> a) {
         List<DirectedNode> result = new ArrayList<>();
         result.add(node);
