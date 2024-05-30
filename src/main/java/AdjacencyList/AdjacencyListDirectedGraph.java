@@ -126,7 +126,11 @@ public class AdjacencyListDirectedGraph {
   	* On non-valued graph, every arc has a weight equal to 0.
  	*/
     public void addArc(DirectedNode from, DirectedNode to) {
-    	// A completer
+    	if (!isArc(from, to) && this.getNodes().contains(from) && this.getNodes().contains(to)) {
+            from.addSucc(to, 0);
+            to.addPred(from, 0);
+            m++;
+        }
     }
 
     //--------------------------------------------------
@@ -168,7 +172,11 @@ public class AdjacencyListDirectedGraph {
  	 */
     public AdjacencyListDirectedGraph computeInverse() {
         AdjacencyListDirectedGraph g = new AdjacencyListDirectedGraph(this); // creation of a copy of the current graph. 
-        // A completer
+        for (DirectedNode n : g.getNodes()) {
+            Map<DirectedNode, Integer> newPreds = n.getSuccs();
+            n.setSuccs(n.getPreds());
+            n.setPreds(newPreds);
+        }
         return g;
     }
 
@@ -236,6 +244,14 @@ public class AdjacencyListDirectedGraph {
         GraphTools.afficherMatrix(Matrix);
         AdjacencyListDirectedGraph al = new AdjacencyListDirectedGraph(Matrix);
         System.out.println(al);
+
+        // Tests computeInverse
+        System.out.println("=== inverse follow : ===");
+
+        GraphTools.afficherMatrix(al.toAdjacencyMatrix());
+        GraphTools.afficherMatrix(al.computeInverse().toAdjacencyMatrix());
+
+        System.out.println("=== ===");
 
         // Tests DFS
         System.out.println("DFS :");
