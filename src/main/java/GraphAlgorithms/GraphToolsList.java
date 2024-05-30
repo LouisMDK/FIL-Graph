@@ -43,20 +43,49 @@ public class GraphToolsList  extends GraphTools {
 
 	public static List<DirectedNode> BFS(AdjacencyListDirectedGraph g) {
 		List<DirectedNode> result = new ArrayList<>();
-		Queue<DirectedNode> fifo = new LinkedList<DirectedNode>();
-		boolean[] marqued = new boolean[g.getNbNodes()];
+		Queue<DirectedNode> fifo = new LinkedList<>();
+		HashSet<DirectedNode> atteint = new HashSet<>();
 		fifo.add(g.getNodeOfList(new DirectedNode(0)));
-		while (fifo.size() > 0){
-			DirectedNode currentNode = fifo.poll();
-			for (DirectedNode n : currentNode.getListSuccs()){
-				if (!marqued[n.getLabel()]) {
-					fifo.add(n);
-					marqued[n.getLabel()] = true;
+		atteint.add(g.getNodeOfList(new DirectedNode(0)));
+		while (!fifo.isEmpty()) {
+			DirectedNode n = fifo.poll();
+			result.add(n);
+			for (DirectedNode sn : n.getListSuccs()) {
+				if (!atteint.contains(sn)) {
+					fifo.add(sn);
+					atteint.add(sn);
 				}
 			}
-			result.add(currentNode);
+
 		}
 		return result;
+	}
+
+	private static List<DirectedNode> explorerSommet(DirectedNode node, Set<DirectedNode> a) {
+		List<DirectedNode> result = new ArrayList<>();
+		result.add(node);
+		a.add(node);
+		for (DirectedNode t : node.getListSuccs()) {
+			if (!a.contains(t)) {
+				result.addAll(explorerSommet(t, a));
+			}
+		}
+		return result;
+	}
+
+	private static List<DirectedNode> explorerGraphe(AdjacencyListDirectedGraph g) {
+		HashSet<DirectedNode> atteint = new HashSet<>();
+		List<DirectedNode> result = new ArrayList<>();
+		for (DirectedNode n : g.getNodes()) {
+			if (!atteint.contains(n)) {
+				result.addAll(explorerSommet(n, atteint));
+			}
+		}
+		return result;
+	}
+
+	public static List<DirectedNode> DFS(AdjacencyListDirectedGraph g) {
+		return explorerGraphe(g);
 	}
 
 	public static void main(String[] args) {
@@ -65,17 +94,27 @@ public class GraphToolsList  extends GraphTools {
 		AdjacencyListDirectedGraph al = new AdjacencyListDirectedGraph(Matrix);
 		System.out.println(al);
 
-		System.out.println("=== BFS ===");
 		int[][] dataGraph = new int[][]{
-				new int[]{0, 1, 1, 0, 1, 0, 0},
-				new int[]{0, 0, 0, 1, 0, 1, 0},
-				new int[]{0, 0, 0, 0, 0, 0, 1},
-				new int[]{0, 0, 0, 0, 0, 0, 0},
-				new int[]{0, 0, 0, 0, 0, 1, 0},
-				new int[]{0, 0, 0, 0, 0, 0, 0},
-				new int[]{0, 0, 0, 0, 0, 0, 0},
-		}; // exemple => @see https://fr.wikipedia.org/wiki/Algorithme_de_parcours_en_largeur#Exemple
+				new int[]{0, 0, 0, 1, 0, 0, 0, 1, 0, 0},
+				new int[]{	0, 0, 1, 0, 0, 0, 0, 1, 0, 1},
+				new int[]{	0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+				new int[]{	0, 1, 1, 0, 0, 0, 0, 0, 0, 1},
+				new int[]{	1, 0, 0, 0, 0, 1, 0, 0, 0, 1},
+				new int[]{	0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
+				new int[]{	0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
+				new int[]{	0, 0, 0, 1, 0, 1, 0, 0, 0, 0},
+				new int[]{	0, 1, 0, 0, 0, 1, 0, 0, 0, 0},
+				new int[]{	0, 0, 1, 0, 0, 0, 1, 0, 0, 0}
+		};
+		System.out.println("=== BFS ===");
+		// Les sommets 4 et 8 n'apparaissent pas car ce sont des sources.
+		// Comme on commence par le sommet 0 et que le graphe est orienté, ils ne peuvent pas être explorés
 		System.out.println(GraphToolsList.BFS(new AdjacencyListDirectedGraph(dataGraph)));
+		System.out.println("===  ===");
+
+
+		System.out.println("=== DFS ===");
+		System.out.println(GraphToolsList.DFS(new AdjacencyListDirectedGraph(dataGraph)));
 		System.out.println("===  ===");
 	}
 }

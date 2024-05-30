@@ -180,51 +180,6 @@ public class AdjacencyListDirectedGraph {
         return g;
     }
 
-    private List<DirectedNode> explorerSommet(DirectedNode node, Set<DirectedNode> a) {
-        List<DirectedNode> result = new ArrayList<>();
-        result.add(node);
-        a.add(node);
-        for (DirectedNode t : node.getListSuccs()) {
-            if (!a.contains(t)) {
-                result.addAll(explorerSommet(t, a));
-            }
-        }
-        return result;
-    }
-
-
-    // DFS algo
-    public List<DirectedNode> explorerGraphe() {
-        HashSet<DirectedNode> atteint = new HashSet<>();
-        List<DirectedNode> result = new ArrayList<>();
-        for (DirectedNode n : nodes) {
-            if (!atteint.contains(n)) {
-                 result.addAll(explorerSommet(n, atteint));
-            }
-        }
-        return result;
-    }
-
-    public List<DirectedNode> BFS() {
-        List<DirectedNode> result = new ArrayList<>();
-        Queue<DirectedNode> fifo = new LinkedList<>();
-        HashSet<DirectedNode> atteint = new HashSet<>();
-        fifo.add(nodes.get(0));
-        atteint.add(nodes.get(0));
-        while (!fifo.isEmpty()) {
-            DirectedNode n = fifo.poll();
-            result.add(n);
-            for (DirectedNode sn : n.getListSuccs()) {
-                if (!atteint.contains(sn)) {
-                    fifo.add(sn);
-                    atteint.add(sn);
-                }
-            }
-
-        }
-        return result;
-    }
-
     @Override
     public String toString(){
         StringBuilder s = new StringBuilder();
@@ -253,14 +208,6 @@ public class AdjacencyListDirectedGraph {
 
         System.out.println("=== ===");
 
-        // Tests DFS
-        System.out.println("DFS :");
-        System.out.println(al.explorerGraphe());
 
-        // Tests BFS
-        // Les sommets 4 et 8 n'apparaissent pas car ce sont des sources.
-        // Comme on commence par le sommet 0 et que le graphe est orienté, ils ne peuvent pas être explorés
-        System.out.println("BFS :");
-        System.out.println(al.BFS());
     }
 }
