@@ -1,9 +1,6 @@
 package AdjacencyList;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 import GraphAlgorithms.GraphTools;
@@ -175,14 +172,6 @@ public class AdjacencyListDirectedGraph {
         return g;
     }
 
-    private void poll() {
-
-    }
-
-    public void BFS() {
-
-    }
-
     private List<DirectedNode> explorerSommet(DirectedNode node, Set<DirectedNode> a) {
         List<DirectedNode> result = new ArrayList<>();
         result.add(node);
@@ -208,6 +197,26 @@ public class AdjacencyListDirectedGraph {
         return result;
     }
 
+    public List<DirectedNode> BFS() {
+        List<DirectedNode> result = new ArrayList<>();
+        Queue<DirectedNode> fifo = new LinkedList<>();
+        HashSet<DirectedNode> atteint = new HashSet<>();
+        fifo.add(nodes.get(0));
+        atteint.add(nodes.get(0));
+        while (!fifo.isEmpty()) {
+            DirectedNode n = fifo.poll();
+            result.add(n);
+            for (DirectedNode sn : n.getListSuccs()) {
+                if (!atteint.contains(sn)) {
+                    fifo.add(sn);
+                    atteint.add(sn);
+                }
+            }
+
+        }
+        return result;
+    }
+
     @Override
     public String toString(){
         StringBuilder s = new StringBuilder();
@@ -229,6 +238,13 @@ public class AdjacencyListDirectedGraph {
         System.out.println(al);
 
         // Tests DFS
+        System.out.println("DFS :");
         System.out.println(al.explorerGraphe());
+
+        // Tests BFS
+        // Les sommets 4 et 8 n'apparaissent pas car ce sont des sources.
+        // Comme on commence par le sommet 0 et que le graphe est orienté, ils ne peuvent pas être explorés
+        System.out.println("BFS :");
+        System.out.println(al.BFS());
     }
 }
