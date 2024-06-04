@@ -119,7 +119,9 @@ public class GraphToolsList  extends GraphTools {
 		List<List<DirectedNode>> result = new ArrayList<>();
 		for (int i = order_CC.size()-1; i >= 0; i--) {
 			if (visite[order_CC.get(i)] == 0) {
+				System.out.println("Exploration du sommet : "+order_CC.get(i));
 				result.add(explorerSommetBis(g.getNodeOfList(new DirectedNode(order_CC.get(i)))));
+				System.out.println("Sommets visités : "+result.get(result.size()-1));
 			}
 		}
 		return result;
@@ -147,6 +149,10 @@ public class GraphToolsList  extends GraphTools {
 				new int[]{	0, 1, 0, 0, 0, 1, 0, 0, 0, 0},
 				new int[]{	0, 0, 1, 0, 0, 0, 1, 0, 0, 0}
 		};
+
+		System.out.println("=== Graph ===");
+		GraphTools.afficherMatrix(dataGraph);
+
 		System.out.println("=== BFS ===");
 		// Les sommets 4 et 8 n'apparaissent pas car ce sont des sources.
 		// Comme on commence par le sommet 0 et que le graphe est orienté, ils ne peuvent pas être explorés
@@ -158,10 +164,10 @@ public class GraphToolsList  extends GraphTools {
 		System.out.println(GraphToolsList.DFS(new AdjacencyListDirectedGraph(dataGraph)));
 		System.out.println("===  ===");
 
-		System.out.println("=== Composantes Connexes ===");
+		System.out.println("=== Composantes Fortement Connexes ===");
 		AdjacencyListDirectedGraph g = new AdjacencyListDirectedGraph(dataGraph);
-		System.out.println(GraphToolsList.explorerGraphe(g));
-		System.out.println(GraphToolsList.explorerGrapheBis(g.computeInverse(), order_CC));
+		System.out.println("Exploration : " + GraphToolsList.explorerGraphe(g));
+		System.out.println("SCC : " + GraphToolsList.explorerGrapheBis(g.computeInverse(), order_CC));
 		System.out.println("===  ===");
 	}
 }
