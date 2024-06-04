@@ -4,14 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="52fb64d8-fd86-4dca-8e5d-aae9dae3ff04" name="Changes" comment="fix: arborescence" />
+    <list default="true" id="52fb64d8-fd86-4dca-8e5d-aae9dae3ff04" name="Changes" comment="fix: arborescence">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GraphAlgorithms/GraphToolsList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GraphAlgorithms/GraphToolsList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/AdjacencyList/AdjacencyListDirectedGraph.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/AdjacencyList/AdjacencyListDirectedGraph.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/AdjacencyList/AdjacencyListDirectedValuedGraph.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/AdjacencyList/AdjacencyListDirectedValuedGraph.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/AdjacencyList/AdjacencyListUndirectedGraph.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/AdjacencyList/AdjacencyListUndirectedGraph.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/AdjacencyList/AdjacencyListUndirectedValuedGraph.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/AdjacencyList/AdjacencyListUndirectedValuedGraph.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/AdjacencyMatrix/AdjacencyMatrixDirectedGraph.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/AdjacencyMatrix/AdjacencyMatrixDirectedGraph.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/AdjacencyMatrix/AdjacencyMatrixUndirectedGraph.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/AdjacencyMatrix/AdjacencyMatrixUndirectedGraph.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GraphAlgorithms/GraphToolsList.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GraphAlgorithms/GraphToolsList.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Nodes/DirectedNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Nodes/DirectedNode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Nodes/UndirectedNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Nodes/UndirectedNode.class" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
@@ -26,25 +39,34 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/louispainter/Developer/Cours IMT/graphes/projet&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
   <component name="RunManager">
-    <configuration default="true" type="JetRunConfigurationType">
+    <configuration name="GraphToolsList" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="GraphAlgorithms.GraphToolsList" />
       <module name="Framework-Graph" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="GraphAlgorithms.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="Framework-Graph" />
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.GraphToolsList" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -56,6 +78,10 @@
       <updated>1711122343651</updated>
       <workItem from="1711122344793" duration="85000" />
       <workItem from="1711122432904" duration="36000" />
+      <workItem from="1717420881738" duration="187000" />
+      <workItem from="1717421085611" duration="4813000" />
+      <workItem from="1717486460778" duration="3229000" />
+      <workItem from="1717508286462" duration="599000" />
     </task>
     <task id="LOCAL-00001" summary="fix: arborescence">
       <option name="closed" value="true" />

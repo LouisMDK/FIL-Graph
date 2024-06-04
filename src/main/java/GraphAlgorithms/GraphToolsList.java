@@ -61,24 +61,65 @@ public class GraphToolsList  extends GraphTools {
 		return result;
 	}
 
-	private static List<DirectedNode> explorerSommet(DirectedNode node, Set<DirectedNode> a) {
+	private static List<DirectedNode> explorerSommet(DirectedNode node) {
 		List<DirectedNode> result = new ArrayList<>();
+
+		visite[node.getLabel()] = 1; // en cours de visite
+		// debut[node.getLabel()] = cpt++;
+
 		result.add(node);
-		a.add(node);
 		for (DirectedNode t : node.getListSuccs()) {
-			if (!a.contains(t)) {
-				result.addAll(explorerSommet(t, a));
+			if (visite[t.getLabel()] == 0) {
+				result.addAll(explorerSommet(t));
+			}
+		}
+
+		visite[node.getLabel()] = 2; // totalement visité
+		// fin[node.getLabel()] = cpt++;
+		order_CC.add(node.getLabel());
+
+		return result;
+	}
+
+	private static List<DirectedNode> explorerGraphe(AdjacencyListDirectedGraph g) {
+		visite = new int[g.getNbNodes()]; // non visité
+		/*
+		debut = new int[g.getNbNodes()];
+		fin = new int[g.getNbNodes()];
+		cpt = 0;
+		 */
+		order_CC = new LinkedList<>();
+
+		List<DirectedNode> result = new ArrayList<>();
+		for (DirectedNode n : g.getNodes()) {
+			if (visite[n.getLabel()] == 0) {
+				result.addAll(explorerSommet(n));
 			}
 		}
 		return result;
 	}
 
-	private static List<DirectedNode> explorerGraphe(AdjacencyListDirectedGraph g) {
-		HashSet<DirectedNode> atteint = new HashSet<>();
+	private static List<DirectedNode> explorerSommetBis(DirectedNode node) {
 		List<DirectedNode> result = new ArrayList<>();
-		for (DirectedNode n : g.getNodes()) {
-			if (!atteint.contains(n)) {
-				result.addAll(explorerSommet(n, atteint));
+		visite[node.getLabel()] = 1; // en cours de visite
+
+		result.add(node);
+		for (DirectedNode t : node.getListSuccs()) {
+			if (visite[t.getLabel()] == 0) {
+				result.addAll(explorerSommetBis(t));
+			}
+		}
+		visite[node.getLabel()] = 2; // totalement visité
+		return result;
+	}
+
+	private static List<List<DirectedNode>> explorerGrapheBis(AdjacencyListDirectedGraph g, List<Integer> order_CC) {
+		visite = new int[g.getNbNodes()]; // non visité
+
+		List<List<DirectedNode>> result = new ArrayList<>();
+		for (int i = order_CC.size()-1; i >= 0; i--) {
+			if (visite[order_CC.get(i)] == 0) {
+				result.add(explorerSommetBis(g.getNodeOfList(new DirectedNode(order_CC.get(i)))));
 			}
 		}
 		return result;
@@ -115,6 +156,12 @@ public class GraphToolsList  extends GraphTools {
 
 		System.out.println("=== DFS ===");
 		System.out.println(GraphToolsList.DFS(new AdjacencyListDirectedGraph(dataGraph)));
+		System.out.println("===  ===");
+
+		System.out.println("=== Composantes Connexes ===");
+		AdjacencyListDirectedGraph g = new AdjacencyListDirectedGraph(dataGraph);
+		System.out.println(GraphToolsList.explorerGraphe(g));
+		System.out.println(GraphToolsList.explorerGrapheBis(g.computeInverse(), order_CC));
 		System.out.println("===  ===");
 	}
 }
