@@ -31,7 +31,18 @@ public class BinaryHeapEdge {
 	 * @param val the edge weight
 	 */
     public void insert(UndirectedNode from, UndirectedNode to, int val) {
-    	// To complete
+		binh.add(new Triple<>(from, to, val));
+		int current = binh.size() - 1;
+
+		while (current > 0) {
+			int parent = (current - 1) / 2;
+			if (binh.get(current).getThird() < binh.get(parent).getThird()) {
+				swap(current, parent);
+				current = parent;
+			} else {
+				break;
+			}
+		}
     }
 
     
@@ -41,11 +52,27 @@ public class BinaryHeapEdge {
 	 * @return the edge with the minimal value (root of the binary heap)
 	 * 
 	 */
-    public Triple<UndirectedNode,UndirectedNode,Integer> remove() {
-    	// To complete
-    	return null;
-        
-    }
+	public Triple<UndirectedNode, UndirectedNode, Integer> remove() {
+		if (isEmpty()) {
+			throw new IllegalStateException("Heap is empty");
+		}
+		Triple<UndirectedNode, UndirectedNode, Integer> removedValue = binh.get(0);
+		binh.set(0, binh.get(binh.size() - 1));
+		binh.remove(binh.size() - 1);
+		percolate(0);
+		return removedValue;
+	}
+
+	private void percolate(int index) {
+		int bestChildPos;
+		while ((bestChildPos = getBestChildPos(index)) < binh.size()) {
+			if (binh.get(index).getThird() <= binh.get(bestChildPos).getThird()) {
+				break;
+			}
+			swap(index, bestChildPos);
+			index = bestChildPos;
+		}
+	}
     
 
     /**
@@ -54,20 +81,22 @@ public class BinaryHeapEdge {
 	 * @param src an index of the list edges
 	 * @return the index of the child edge with the least weight
 	 */
-    private int getBestChildPos(int src) {
-    	int lastIndex = binh.size()-1; 
-        if (isLeaf(src)) { // the leaf is a stopping case, then we return a default value
-            return Integer.MAX_VALUE;
-        } else {
-        	// To complete
-        	return Integer.MAX_VALUE;
-        }
-    }
+	private int getBestChildPos(int src) {
+		int left = 2 * src + 1;
+		int right = 2 * src + 2;
 
-    private boolean isLeaf(int src) {
-    	// A completer
-    	return false;
-    }
+		if (left >= binh.size()) {
+			return Integer.MAX_VALUE;  // No children
+		} else if (right >= binh.size()) {
+			return left;  // Only left child exists
+		} else {
+			return (binh.get(left).getThird() < binh.get(right).getThird()) ? left : right;  // Return the smaller child
+		}
+	}
+
+	private boolean isLeaf(int src) {
+		return 2 * src + 1 >= binh.size();
+	}
 
     
     /**
@@ -172,8 +201,19 @@ public class BinaryHeapEdge {
             k--;
         }
         // A completer
-        
+        System.out.println("\n" + jarjarBin);
         System.out.println(jarjarBin.test());
+
+		// Test getBestChildPos
+		System.out.println(jarjarBin.getBestChildPos(0) );
+		System.out.println(jarjarBin.getBestChildPos(0) == 1);
+
+		System.out.println(jarjarBin.remove());
+		System.out.println(jarjarBin);
+		System.out.println(jarjarBin.test());
+		System.out.println(jarjarBin.remove());
+		System.out.println(jarjarBin);
+		System.out.println(jarjarBin.test());
     }
 
 }
