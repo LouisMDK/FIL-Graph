@@ -131,6 +131,52 @@ public class GraphToolsList  extends GraphTools {
 		return explorerGraphe(g);
 	}
 
+	private static boolean containsFalse(boolean[] tab) {
+		for (boolean b : tab) {
+			if (!b) {
+				return true;
+			}
+		}
+		return false;
+	}
+	public static void dijkstra(AdjacencyListDirectedValuedGraph g, DirectedNode source) {
+		boolean[] mark = new boolean[g.getNbNodes()];
+		int[] val = new int[g.getNbNodes()];
+		DirectedNode[] pred = new DirectedNode[g.getNbNodes()];
+		for (int i = 0; i < g.getNbNodes(); i++) {
+			val[i] = Integer.MAX_VALUE / 2;
+			pred[i] = null;
+			mark[i] = false;
+		}
+		val[source.getLabel()] = 0;
+		pred[source.getLabel()] = source;
+		while(containsFalse(mark)) {
+			int x = 0;
+			int min = (Integer.MAX_VALUE / 2) + 1;
+			for (int y = 0; y < g.getNbNodes(); y++) {
+				if (!mark[y] && val[y] < min) {
+					min = val[y];
+					x = y;
+				}
+			}
+				mark[x] = true;
+				for (int y = 0; y < g.getNbNodes(); y++) {
+					int cout;
+					if (g.getNodeOfList(new DirectedNode(x)).getSuccs().get(g.getNodeOfList(new DirectedNode(y))) == null) {
+						cout = Integer.MAX_VALUE / 2;
+					} else {
+						cout = g.getNodeOfList(new DirectedNode(x)).getSuccs().get(g.getNodeOfList(new DirectedNode(y)));
+					}
+					if (!mark[y] && val[x] + cout < val[y]) {
+						val[y] = val[x] + cout;
+						pred[y] = g.getNodeOfList(new DirectedNode(x));
+					}
+				}
+			}
+		System.out.println("Valeurs : "+Arrays.toString(val));
+		System.out.println("Prédécesseurs : "+Arrays.toString(pred));
+	}
+
 	public static void main(String[] args) {
 		int[][] Matrix = GraphTools.generateGraphData(10, 20, false, false, true, 100001);
 		GraphTools.afficherMatrix(Matrix);
@@ -168,6 +214,10 @@ public class GraphToolsList  extends GraphTools {
 		AdjacencyListDirectedGraph g = new AdjacencyListDirectedGraph(dataGraph);
 		System.out.println("Exploration : " + GraphToolsList.explorerGraphe(g));
 		System.out.println("SCC : " + GraphToolsList.explorerGrapheBis(g.computeInverse(), order_CC));
+		System.out.println("===  ===");
+
+		System.out.println("=== Dijkstra ===");
+		GraphToolsList.dijkstra(new AdjacencyListDirectedValuedGraph(dataGraph), new DirectedNode(0));
 		System.out.println("===  ===");
 	}
 }
