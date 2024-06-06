@@ -28,20 +28,58 @@ public class BinaryHeap {
     }
 
     public void insert(int element) {
-    	// A completer
+        if (pos == nodes.length) {
+            resize();
+        }
+        nodes[pos] = element;
+        int current = pos;
+        pos++;
+        while (current > 0) {
+            int parent = (current - 1) / 2;
+            if (nodes[current] < nodes[parent]) {
+                swap(current, parent);
+                current = parent;
+            } else {
+                break;
+            }
+        }
     }
 
     public int remove() {
-    	// A completer
-    	return 0;
+        if (isEmpty()) {
+            throw new IllegalStateException("Heap is empty");
+        }
+        int removedValue = nodes[0];
+        nodes[0] = nodes[--pos];
+        nodes[pos] = Integer.MAX_VALUE;
+        percolate(0);
+        return removedValue;
+    }
+
+    private void percolate(int index) {
+        int bestChildPos;
+        while ((bestChildPos = getBestChildPos(index)) < pos) {
+            if (nodes[index] <= nodes[bestChildPos]) {
+                break;
+            }
+            swap(index, bestChildPos);
+            index = bestChildPos;
+        }
     }
 
     private int getBestChildPos(int src) {
-        if (isLeaf(src)) { // the leaf is a stopping case, then we return a default value
+        int left = 2 * src + 1;
+        int right = 2 * src + 2;
+
+        if (left >= pos) {
+            // No children
             return Integer.MAX_VALUE;
+        } else if (right >= pos) {
+            // Only left child
+            return left;
         } else {
-        	// A completer
-        	return Integer.MAX_VALUE;
+            // Both children exist, return the position of the smaller child
+            return (nodes[left] < nodes[right]) ? left : right;
         }
     }
 
@@ -53,8 +91,7 @@ public class BinaryHeap {
 	 * 
 	 */	
     private boolean isLeaf(int src) {
-    	// A completer
-    	return false;
+        return 2 * src + 1 >= pos;
     }
 
     private void swap(int father, int child) {
@@ -104,12 +141,24 @@ public class BinaryHeap {
         int max = 20;
         while (k > 0) {
             int rand = min + (int) (Math.random() * ((max - min) + 1));
-            System.out.print("insert " + rand);
+            System.out.print("insert " + rand + " ");
             jarjarBin.insert(rand);            
             k--;
         }
      // A completer
         System.out.println("\n" + jarjarBin);
+        System.out.println(!jarjarBin.isEmpty());
+        System.out.println(jarjarBin.test());
+
+        // Test getBestChildPos
+        System.out.println(jarjarBin.getBestChildPos(0) );
+        System.out.println(jarjarBin.getBestChildPos(0) == 1);
+
+        System.out.println(jarjarBin.remove());
+        System.out.println(jarjarBin);
+        System.out.println(jarjarBin.test());
+        System.out.println(jarjarBin.remove());
+        System.out.println(jarjarBin);
         System.out.println(jarjarBin.test());
     }
 
