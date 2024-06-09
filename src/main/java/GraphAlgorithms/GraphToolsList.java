@@ -1,15 +1,11 @@
 package GraphAlgorithms;
 
 import java.util.*;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 
 import AdjacencyList.AdjacencyListDirectedGraph;
 import AdjacencyList.AdjacencyListDirectedValuedGraph;
 import AdjacencyList.AdjacencyListUndirectedValuedGraph;
 import Collection.Triple;
-import Nodes.AbstractNode;
 import Nodes.DirectedNode;
 import Nodes.UndirectedNode;
 
@@ -159,22 +155,46 @@ public class GraphToolsList  extends GraphTools {
 					x = y;
 				}
 			}
-				mark[x] = true;
-				for (int y = 0; y < g.getNbNodes(); y++) {
-					int cout;
-					if (g.getNodeOfList(new DirectedNode(x)).getSuccs().get(g.getNodeOfList(new DirectedNode(y))) == null) {
-						cout = Integer.MAX_VALUE / 2;
-					} else {
-						cout = g.getNodeOfList(new DirectedNode(x)).getSuccs().get(g.getNodeOfList(new DirectedNode(y)));
-					}
-					if (!mark[y] && val[x] + cout < val[y]) {
-						val[y] = val[x] + cout;
-						pred[y] = g.getNodeOfList(new DirectedNode(x));
+			mark[x] = true;
+			for (int y = 0; y < g.getNbNodes(); y++) {
+				int cout;
+				if (g.getNodeOfList(new DirectedNode(x)).getSuccs().get(g.getNodeOfList(new DirectedNode(y))) == null) {
+					cout = Integer.MAX_VALUE / 2;
+				} else {
+					cout = g.getNodeOfList(new DirectedNode(x)).getSuccs().get(g.getNodeOfList(new DirectedNode(y)));
+				}
+				if (!mark[y] && val[x] + cout < val[y]) {
+					val[y] = val[x] + cout;
+					pred[y] = g.getNodeOfList(new DirectedNode(x));
+				}
+			}
+		}
+		System.out.println("Valeurs : "+Arrays.toString(val));
+		System.out.println("Prédécesseurs : "+Arrays.toString(pred));
+	}
+
+	public static List<Triple<UndirectedNode, UndirectedNode, Integer>> prim(AdjacencyListUndirectedValuedGraph g, UndirectedNode startNode) {
+		List<Triple<UndirectedNode, UndirectedNode, Integer>> result = new ArrayList<>();
+		BinaryHeapEdge binHeap = new BinaryHeapEdge();
+		Set<UndirectedNode> visited = new HashSet<>();
+		visited.add(startNode);
+		for (UndirectedNode neigh:startNode.getListNeigh()) {
+			binHeap.insert(startNode, neigh, startNode.getNeighbours().get(neigh));
+		}
+		while (!binHeap.isEmpty()){
+			Triple<UndirectedNode, UndirectedNode, Integer> currentEdge = binHeap.remove();
+			UndirectedNode newDiscoverNode = currentEdge.getSecond();
+			if (!visited.contains(newDiscoverNode)){ // second as the first will always be already visited
+				result.add(currentEdge);
+				visited.add(newDiscoverNode);
+				for (UndirectedNode neigh:newDiscoverNode.getListNeigh()) {
+					if (!visited.contains(neigh)){
+						binHeap.insert(newDiscoverNode, neigh, newDiscoverNode.getNeighbours().get(neigh));
 					}
 				}
 			}
-		System.out.println("Valeurs : "+Arrays.toString(val));
-		System.out.println("Prédécesseurs : "+Arrays.toString(pred));
+		}
+		return result;
 	}
 
 	public static void main(String[] args) {
@@ -218,6 +238,37 @@ public class GraphToolsList  extends GraphTools {
 
 		System.out.println("=== Dijkstra ===");
 		GraphToolsList.dijkstra(new AdjacencyListDirectedValuedGraph(dataGraph), new DirectedNode(0));
+		System.out.println("===  ===");
+
+		System.out.println("=== Prim ===");
+
+		int[][] primGraphData = new int[][]{
+				new int[]{0, 2, 0, 6, 0, 0, 0, 0, 0, 0},
+				new int[]{2, 0, 3, 8, 5, 0, 0, 0, 0, 0},
+				new int[]{0, 3, 0, 0, 7, 0, 0, 0, 0, 0},
+				new int[]{6, 8, 0, 0, 9, 0, 0, 0, 0, 0},
+				new int[]{0, 5, 7, 9, 0, 4, 0, 0, 0, 0},
+				new int[]{0, 0, 0, 0, 4, 0, 2, 0, 0, 0},
+				new int[]{0, 0, 0, 0, 0, 2, 0, 1, 6, 0},
+				new int[]{0, 0, 0, 0, 0, 0, 1, 0, 7, 8},
+				new int[]{0, 0, 0, 0, 0, 0, 6, 7, 0, 1},
+				new int[]{0, 0, 0, 0, 0, 0, 0, 8, 1, 0}
+		};
+
+		AdjacencyListUndirectedValuedGraph primGraph = new AdjacencyListUndirectedValuedGraph(primGraphData);
+		System.out.println(GraphToolsList.prim(primGraph, primGraph.getNodes().get(0)));
+		/* expected
+		Edge    Weight
+		0 - 1   2
+		1 - 2   3
+		0 - 3   6
+		1 - 4   5
+		4 - 5   4
+		5 - 6   2
+		6 - 7   1
+		8 - 9   1
+		6 - 8   6
+		 */
 		System.out.println("===  ===");
 	}
 }
